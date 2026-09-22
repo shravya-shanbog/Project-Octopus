@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Octopus | Data Access</title>
+
+    <link rel="stylesheet" href="/static/permission.css">
+
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+
+    <main class="permission-page">
+
+        <section class="brand-section">
+
+            <div class="logo">
+                <span>O</span>
+            </div>
+
+            <h2 class="brand-name">
+                PROJECT <strong>OCTOPUS</strong>
+            </h2>
+
+            <p class="brand-description">
+                Centralized Data Integration & Monitoring Platform
+            </p>
+
+            <div class="secure-badge">
+                <span class="status-dot"></span>
+                Secure Authorized Connection
+            </div>
+
+        </section>
+
+
+        <section class="permission-card">
+
+            <div class="card-header">
+
+                <p class="eyebrow">
+                    DATA ACCESS REQUEST
+                </p>
+
+                <h1>
+                    Allow Octopus to connect?
+                </h1>
+
+                <p class="description">
+                    Project Octopus requires your authorization
+                    before accessing data from an approved
+                    external system.
+                </p>
+
+            </div>
+
+
+            <div class="connection-box">
+
+                <div class="connection-icon">
+                    ↔
+                </div>
+
+                <div>
+
+                    <h3>
+                        Authorized System Connection
+                    </h3>
+
+                    <p>
+                        External System
+                        <span>→</span>
+                        Project Octopus
+                    </p>
+
+                </div>
+
+                <div class="connection-status">
+                    PENDING
+                </div>
+
+            </div>
+
+
+            <div class="permissions-section">
+
+                <h3>
+                    Requested access
+                </h3>
+
+                <div class="permission-row">
+
+                    <span class="check">✓</span>
+
+                    <div>
+                        <strong>Read approved data</strong>
+                        <small>
+                            Access only to permitted records
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="permission-row">
+
+                    <span class="check">✓</span>
+
+                    <div>
+                        <strong>Location information</strong>
+                        <small>
+                            Read available location information
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="permission-row">
+
+                    <span class="check">✓</span>
+
+                    <div>
+                        <strong>Status & updates</strong>
+                        <small>
+                            Read status and update information
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="permission-row">
+
+                    <span class="check">✓</span>
+
+                    <div>
+                        <strong>Synchronization</strong>
+                        <small>
+                            Synchronize permitted source changes
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="purpose-box">
+
+                <div class="info-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <strong>
+                        Why does Octopus need access?
+                    </strong>
+
+                    <p>
+                        Octopus uses the authorized connection
+                        to extract, map, normalize, validate and
+                        synchronize permitted information.
+                        It then provides centralized search,
+                        source visibility, location and monitoring.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="permissionMessage"
+                class="permission-message">
+            </div>
+
+
+            <div class="action-buttons">
+
+                <button
+                    id="denyButton"
+                    class="deny-button"
+                    type="button">
+
+                    Deny Access
+
+                </button>
+
+
+                <button
+                    id="allowButton"
+                    class="allow-button"
+                    type="button">
+
+                    <span>
+                        Allow Access
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <p class="security-note">
+                🔒 Access is limited to the permissions granted
+                by the authorized user.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer class="page-footer">
+
+        <span>PROJECT OCTOPUS</span>
+
+        <span>Secure • Connected • Traceable</span>
+
+        <span>Authorized Access Only</span>
+
+    </footer>
+
+
+    <script src="/static/permission.js"></script>
+
+</body>
+
+</html>

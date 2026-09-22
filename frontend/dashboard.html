@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Project Octopus | Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #eef7ff;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #12385d 0%,
+                    #081827 42%,
+                    #04101b 100%
+                );
+        }
+
+        .page {
+            width: min(1450px, 94%);
+            margin: auto;
+            padding: 28px 0 50px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .brand h1 {
+            font-size: 32px;
+            font-weight: 850;
+        }
+
+        .brand p {
+            margin-top: 6px;
+            color: #89a9bf;
+            font-size: 13px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav button,
+        .mini-button {
+            border: 1px solid rgba(255,255,255,0.10);
+            background: rgba(255,255,255,0.07);
+            color: #eaf7ff;
+            border-radius: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .nav button:hover,
+        .mini-button:hover {
+            background: rgba(69,185,255,0.14);
+        }
+
+        .nav .primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #16c7b7,
+                    #4387ff
+                );
+            border: none;
+        }
+
+        .system-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            padding: 17px 20px;
+            margin-bottom: 18px;
+
+            border-radius: 16px;
+
+            background: rgba(7,28,46,0.95);
+            border: 1px solid rgba(100,205,255,0.10);
+        }
+
+        .system-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #45e0a7;
+
+            box-shadow:
+                0 0 14px rgba(69,224,167,0.8);
+        }
+
+        .status-dot.offline {
+            background: #ff6868;
+
+            box-shadow:
+                0 0 14px rgba(255,104,104,0.8);
+        }
+
+        .system-title {
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .system-subtitle {
+            margin-top: 3px;
+            color: #7899ad;
+            font-size: 11px;
+        }
+
+        .clock {
+            color: #8ca8b9;
+            font-size: 11px;
+            text-align: right;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .metric {
+            padding: 18px;
+            min-height: 122px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15,48,72,0.95),
+                    rgba(7,23,38,0.95)
+                );
+
+            border:
+                1px solid rgba(110,207,255,0.10);
+        }
+
+        .metric-label {
+            color: #79a1b8;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .metric-value {
+            margin-top: 12px;
+            font-size: 30px;
+            font-weight: 850;
+        }
+
+        .metric-note {
+            margin-top: 6px;
+            color: #7896a9;
+            font-size: 11px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: rgba(8,27,43,0.93);
+            border: 1px solid rgba(255,255,255,0.065);
+            border-radius: 19px;
+            padding: 20px;
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 17px;
+        }
+
+        .card-title h2 {
+            font-size: 17px;
+        }
+
+        .card-title p {
+            margin-top: 5px;
+            color: #7595a9;
+            font-size: 11px;
+        }
+
+        .source {
+            padding: 15px;
+            border-radius: 13px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.055);
+            margin-bottom: 11px;
+        }
+
+        .source-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .source-name {
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .source-type {
+            margin-top: 4px;
+            color: #7192a7;
+            font-size: 10px;
+        }
+
+        .source-status {
+            color: #5de2ae;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .source-meta {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .meta {
+            padding: 9px;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.025);
+        }
+
+        .meta-label {
+            color: #648499;
+            font-size: 8px;
+            text-transform: uppercase;
+        }
+
+        .meta-value {
+            margin-top: 4px;
+            color: #cce0eb;
+            font-size: 10px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .sync-box {
+            padding: 15px;
+            border-radius: 13px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .sync-title {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .sync-time {
+            margin-top: 6px;
+            color: #7899ad;
+            font-size: 10px;
+        }
+
+        .sync-row {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .sync-stat {
+            padding: 10px;
+            border-radius: 9px;
+            background: rgba(0,0,0,0.12);
+        }
+
+        .sync-stat-label {
+            color: #648499;
+            font-size: 8px;
+            text-transform: uppercase;
+        }
+
+        .sync-stat-value {
+            margin-top: 4px;
+            font-weight: 800;
+            font-size: 12px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 11px 8px;
+            border-bottom:
+                1px solid rgba(255,255,255,0.05);
+            text-align: left;
+            font-size: 10px;
+        }
+
+        th {
+            color: #65879d;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: #d4e5ef;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 14px;
+            background: rgba(69,224,167,0.09);
+            color: #5de2ae;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .entity-link {
+            color: #76bcff;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .action {
+            padding: 16px;
+            border-radius: 13px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            color: #e7f5fb;
+            font-weight: 800;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .action:hover {
+            background: rgba(69,185,255,0.10);
+        }
+
+        .empty {
+            padding: 20px;
+            color: #718fa3;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .error {
+            padding: 13px;
+            border-radius: 10px;
+            color: #ffaaaa;
+            background: rgba(255,70,70,0.08);
+            border: 1px solid rgba(255,90,90,0.12);
+            font-size: 11px;
+        }
+
+        @media (max-width: 1100px) {
+            .metrics {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .metrics {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .actions {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .source-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+
+        <div class="brand">
+
+            <h1>Project Octopus</h1>
+
+            <p>
+                Universal centralized data integration,
+                synchronization, search and monitoring
+            </p>
+
+        </div>
+
+        <div class="nav">
+
+            <button onclick="openConnect()">
+                Connect Source
+            </button>
+
+            <button onclick="openSync()">
+                Synchronization
+            </button>
+
+            <button
+                onclick="openSearch()"
+                class="primary"
+            >
+                Search
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-banner">
+
+        <div class="system-left">
+
+            <div
+                id="systemDot"
+                class="status-dot"
+            ></div>
+
+            <div>
+
+                <div
+                    id="systemTitle"
+                    class="system-title"
+                >
+                    Loading Octopus...
+                </div>
+
+                <div
+                    id="systemSubtitle"
+                    class="system-subtitle"
+                >
+                    Reading backend and PostgreSQL state
+                </div>
+
+            </div>
+
+        </div>
+
+        <div
+            id="clock"
+            class="clock"
+        >
+            —
+        </div>
+
+    </div>
+
+
+    <div class="metrics">
+
+        <div class="metric">
+
+            <div class="metric-label">
+                Sources
+            </div>
+
+            <div
+                id="sourceCount"
+                class="metric-value"
+            >
+                —
+            </div>
+
+            <div class="metric-note">
+                Registered sources
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-label">
+                Entities
+            </div>
+
+            <div
+                id="entityCount"
+                class="metric-value"
+            >
+                —
+            </div>
+
+            <div class="metric-note">
+                Central entities
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-label">
+                Data Records
+            </div>
+
+            <div
+                id="dataCount"
+                class="metric-value"
+            >
+                —
+            </div>
+
+            <div class="metric-note">
+                Stored snapshots
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-label">
+                Events
+            </div>
+
+            <div
+                id="eventCount"
+                class="metric-value"
+            >
+                —
+            </div>
+
+            <div class="metric-note">
+                Recorded events
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-label">
+                Last Sync
+            </div>
+
+            <div
+                id="lastSync"
+                class="metric-value"
+                style="font-size:16px;"
+            >
+                —
+            </div>
+
+            <div class="metric-note">
+                Latest source synchronization
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="main-grid">
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        Authorized Sources
+                    </h2>
+
+                    <p>
+                        Live source and synchronization state
+                    </p>
+
+                </div>
+
+                <button
+                    class="mini-button"
+                    onclick="openConnect()"
+                >
+                    Add Source
+                </button>
+
+            </div>
+
+            <div id="sources">
+
+                <div class="empty">
+                    Loading sources...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        Live Synchronization
+                    </h2>
+
+                    <p>
+                        Actual PostgreSQL state
+                    </p>
+
+                </div>
+
+                <button
+                    class="mini-button"
+                    onclick="openSync()"
+                >
+                    Details
+                </button>
+
+            </div>
+
+            <div id="syncPanel">
+
+                <div class="empty">
+                    Loading synchronization...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+
+            <div>
+
+                <h2>
+                    Latest Centralized Entities
+                </h2>
+
+                <p>
+                    Live records from PostgreSQL
+                </p>
+
+            </div>
+
+            <button
+                class="mini-button"
+                onclick="openSearch()"
+            >
+                Open Search
+            </button>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Entity</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Source</th>
+                        <th>Updated</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="entities"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <div
+            class="action"
+            onclick="openConnect()"
+        >
+            Connect New Source
+        </div>
+
+        <div
+            class="action"
+            onclick="openSync()"
+        >
+            View Synchronization
+        </div>
+
+        <div
+            class="action"
+            onclick="openSearch()"
+        >
+            Search Central Database
+        </div>
+
+        <div
+            class="action"
+            onclick="refreshAll()"
+        >
+            Refresh Live Data
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "Not available";
+        }
+
+        try {
+
+            return new Date(value)
+                .toLocaleString(
+                    "en-IN",
+                    {
+                        dateStyle: "medium",
+                        timeStyle: "short"
+                    }
+                );
+
+        } catch {
+
+            return String(value);
+        }
+    }
+
+
+    async function refreshAll() {
+
+        try {
+
+            const [
+                syncResponse,
+                entityResponse
+            ] = await Promise.all([
+
+                fetch(
+                    "/api/sync/status",
+                    {
+                        cache: "no-store"
+                    }
+                ),
+
+                fetch(
+                    "/api/entities",
+                    {
+                        cache: "no-store"
+                    }
+                )
+            ]);
+
+
+            const syncData =
+                await syncResponse.json();
+
+            const entityData =
+                await entityResponse.json();
+
+
+            if (
+                !syncResponse.ok ||
+                !syncData.success
+            ) {
+
+                throw new Error(
+                    syncData.error ||
+                    "Synchronization API unavailable."
+                );
+            }
+
+
+            if (
+                !entityResponse.ok ||
+                !entityData.success
+            ) {
+
+                throw new Error(
+                    entityData.error ||
+                    "Entity API unavailable."
+                );
+            }
+
+
+            renderDashboard(
+                syncData,
+                entityData
+            );
+
+        } catch (error) {
+
+            showOffline(
+                error.message
+            );
+        }
+    }
+
+
+    function renderDashboard(
+        syncData,
+        entityData
+    ) {
+
+        const dot =
+            document.getElementById(
+                "systemDot"
+            );
+
+        dot.className =
+            "status-dot";
+
+
+        document.getElementById(
+            "systemTitle"
+        ).textContent =
+            "Octopus is connected";
+
+
+        document.getElementById(
+            "systemSubtitle"
+        ).textContent =
+            "Backend online · PostgreSQL online · "
+            + "authorized source monitoring active";
+
+
+        document.getElementById(
+            "sourceCount"
+        ).textContent =
+            syncData.sources.count;
+
+
+        document.getElementById(
+            "entityCount"
+        ).textContent =
+            syncData.database.entities;
+
+
+        document.getElementById(
+            "dataCount"
+        ).textContent =
+            syncData.database.data_records;
+
+
+        document.getElementById(
+            "eventCount"
+        ).textContent =
+            syncData.database.events;
+
+
+        const latestSync =
+            syncData.latest_sync;
+
+
+        document.getElementById(
+            "lastSync"
+        ).textContent =
+            latestSync
+                ? formatDate(
+                    latestSync.last_sync_at
+                )
+                : "No sync";
+
+
+        renderSources(
+            syncData.sources.items
+        );
+
+
+        renderSync(
+            syncData
+        );
+
+
+        renderEntities(
+            entityData.entities
+        );
+    }
+
+
+    function renderSources(
+        sources
+    ) {
+
+        const container =
+            document.getElementById(
+                "sources"
+            );
+
+
+        if (
+            !sources ||
+            !sources.length
+        ) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No source is registered yet.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            sources
+                .slice(0, 6)
+                .map(
+                    function(source) {
+
+                        return `
+                            <div class="source">
+
+                                <div class="source-top">
+
+                                    <div>
+
+                                        <div class="source-name">
+                                            ${escapeHtml(
+                                                source.source_name
+                                            )}
+                                        </div>
+
+                                        <div class="source-type">
+                                            ${escapeHtml(
+                                                source.source_type
+                                            )}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="source-status">
+                                        ●
+                                        ${escapeHtml(
+                                            source.status ||
+                                            "Unknown"
+                                        )}
+                                    </div>
+
+                                </div>
+
+                                <div class="source-meta">
+
+                                    <div class="meta">
+
+                                        <div class="meta-label">
+                                            Source ID
+                                        </div>
+
+                                        <div class="meta-value">
+                                            ${escapeHtml(
+                                                source.source_id
+                                            )}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="meta">
+
+                                        <div class="meta-label">
+                                            Last Sync
+                                        </div>
+
+                                        <div class="meta-value">
+                                            ${escapeHtml(
+                                                formatDate(
+                                                    source.last_sync_at
+                                                )
+                                            )}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    function renderSync(
+        data
+    ) {
+
+        const container =
+            document.getElementById(
+                "syncPanel"
+            );
+
+
+        const latest =
+            data.latest_sync;
+
+
+        if (!latest) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No synchronization recorded yet.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = `
+
+            <div class="sync-box">
+
+                <div class="sync-title">
+                    ${escapeHtml(
+                        latest.source_name
+                    )}
+                </div>
+
+                <div class="sync-time">
+                    Last synchronization:
+                    ${escapeHtml(
+                        formatDate(
+                            latest.last_sync_at
+                        )
+                    )}
+                </div>
+
+                <div class="sync-row">
+
+                    <div class="sync-stat">
+
+                        <div class="sync-stat-label">
+                            Entities
+                        </div>
+
+                        <div class="sync-stat-value">
+                            ${escapeHtml(
+                                String(
+                                    data.database.entities
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="sync-stat">
+
+                        <div class="sync-stat-label">
+                            Records
+                        </div>
+
+                        <div class="sync-stat-value">
+                            ${escapeHtml(
+                                String(
+                                    data.database.data_records
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="sync-stat">
+
+                        <div class="sync-stat-label">
+                            Events
+                        </div>
+
+                        <div class="sync-stat-value">
+                            ${escapeHtml(
+                                String(
+                                    data.database.events
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+    }
+
+
+    function renderEntities(
+        entities
+    ) {
+
+        const body =
+            document.getElementById(
+                "entities"
+            );
+
+
+        if (
+            !entities ||
+            !entities.length
+        ) {
+
+            body.innerHTML = `
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="empty"
+                    >
+                        No centralized entities
+                        are currently available.
+                    </td>
+
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        body.innerHTML =
+            entities
+                .slice(0, 10)
+                .map(
+                    function(entity) {
+
+                        return `
+
+                            <tr>
+
+                                <td>
+
+                                    <span
+                                        class="entity-link"
+                                        onclick='viewEntity(
+                                            ${JSON.stringify(
+                                                entity.entity_id
+                                            )}
+                                        )'
+                                    >
+                                        ${escapeHtml(
+                                            entity.entity_name ||
+                                            entity.entity_id
+                                        )}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(
+                                        entity.entity_type
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(
+                                        entity.location ||
+                                        "Not available"
+                                    )}
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="status-pill"
+                                    >
+                                        ${escapeHtml(
+                                            entity.status ||
+                                            "Unknown"
+                                        )}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(
+                                        entity.source_id
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(
+                                        formatDate(
+                                            entity.updated_at
+                                        )
+                                    )}
+                                </td>
+
+                            </tr>
+
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    function showOffline(
+        message
+    ) {
+
+        document.getElementById(
+            "systemDot"
+        ).className =
+            "status-dot offline";
+
+
+        document.getElementById(
+            "systemTitle"
+        ).textContent =
+            "PostgreSQL / backend unavailable";
+
+
+        document.getElementById(
+            "systemSubtitle"
+        ).textContent =
+            message;
+
+
+        document.getElementById(
+            "sources"
+        ).innerHTML = `
+            <div class="error">
+                Central PostgreSQL is unavailable.
+            </div>
+        `;
+
+
+        document.getElementById(
+            "syncPanel"
+        ).innerHTML = `
+            <div class="error">
+                Live synchronization status cannot
+                be read while the database is offline.
+            </div>
+        `;
+
+
+        document.getElementById(
+            "entities"
+        ).innerHTML = `
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="error"
+                >
+                    Central PostgreSQL is unavailable.
+                </td>
+
+            </tr>
+        `;
+    }
+
+
+    function openConnect() {
+
+        window.location.href =
+            "/static/connect.html";
+    }
+
+
+    function openSync() {
+
+        window.location.href =
+            "/static/processing.html";
+    }
+
+
+    function openSearch() {
+
+        window.location.href =
+            "/static/search.html";
+    }
+
+
+    function viewEntity(
+        entityId
+    ) {
+
+        window.location.href =
+            "/static/entity.html?id=" +
+            encodeURIComponent(
+                entityId
+            );
+    }
+
+
+    function updateClock() {
+
+        document.getElementById(
+            "clock"
+        ).textContent =
+            new Date()
+                .toLocaleString(
+                    "en-IN",
+                    {
+                        dateStyle: "medium",
+                        timeStyle: "medium"
+                    }
+                );
+    }
+
+
+    updateClock();
+
+    setInterval(
+        updateClock,
+        1000
+    );
+
+
+    refreshAll();
+
+    setInterval(
+        refreshAll,
+        5000
+    );
+
+</script>
+
+</body>
+</html>

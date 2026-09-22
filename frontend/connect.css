@@ -1,0 +1,698 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(35, 205, 200, 0.12),
+            transparent 32%
+        ),
+        #06111f;
+    color: #f4f8ff;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.background-grid {
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+    pointer-events: none;
+}
+
+.connect-page {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.topbar {
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(5, 18, 32, 0.72);
+    backdrop-filter: blur(15px);
+}
+
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.mini-logo {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #2ed3cf;
+    border-radius: 12px;
+
+    color: #35d1cd;
+    font-size: 23px;
+    font-weight: 800;
+
+    background: rgba(35, 205, 200, 0.08);
+}
+
+.brand-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.brand-title strong {
+    color: #35d1cd;
+}
+
+.brand-subtitle {
+    margin-top: 4px;
+
+    color: #7189a4;
+
+    font-size: 11px;
+}
+
+.security-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    border: 1px solid rgba(53, 209, 205, 0.2);
+    border-radius: 30px;
+
+    color: #91a7c2;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #35d1cd;
+
+    box-shadow: 0 0 10px rgba(53, 209, 205, 0.8);
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.content {
+    width: min(1120px, 90%);
+
+    margin: auto;
+
+    padding: 55px 0 70px;
+}
+
+.heading {
+    max-width: 760px;
+}
+
+.eyebrow {
+    color: #35d1cd;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.heading h1 {
+    margin-top: 10px;
+
+    font-size: 39px;
+    line-height: 1.15;
+}
+
+.heading > p:last-child {
+    margin-top: 14px;
+
+    color: #91a7c2;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   CONNECTOR SECTION
+========================================= */
+
+.connector-section {
+    margin-top: 42px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 17px;
+}
+
+.section-title h2 {
+    font-size: 18px;
+}
+
+.section-title span {
+    color: #7189a4;
+    font-size: 12px;
+}
+
+.connector-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.connector-card {
+    position: relative;
+
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    text-align: left;
+
+    color: #f4f8ff;
+
+    background: rgba(12, 31, 51, 0.78);
+
+    border: 1px solid rgba(130, 170, 210, 0.14);
+
+    border-radius: 16px;
+
+    transition:
+        border-color 0.2s,
+        transform 0.2s,
+        background 0.2s;
+}
+
+.connector-card:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(53, 209, 205, 0.35);
+
+    background: rgba(16, 42, 65, 0.9);
+}
+
+.connector-card.active {
+    border-color: rgba(53, 209, 205, 0.65);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(28, 106, 113, 0.28),
+            rgba(13, 39, 63, 0.88)
+        );
+
+    box-shadow:
+        0 0 25px rgba(53, 209, 205, 0.07);
+}
+
+.connector-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(53, 209, 205, 0.09);
+
+    color: #35d1cd;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.connector-info h3 {
+    font-size: 15px;
+}
+
+.connector-info p {
+    margin-top: 6px;
+
+    color: #7189a4;
+
+    font-size: 11px;
+}
+
+.connector-check {
+    position: absolute;
+
+    top: 13px;
+    right: 14px;
+
+    opacity: 0;
+
+    color: #35d1cd;
+
+    font-size: 14px;
+}
+
+.connector-card.active .connector-check {
+    opacity: 1;
+}
+
+/* =========================================
+   CONFIGURATION CARD
+========================================= */
+
+.configuration-card {
+    margin-top: 32px;
+
+    padding: 30px;
+
+    border: 1px solid rgba(130, 170, 210, 0.17);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 40, 63, 0.94),
+            rgba(7, 24, 42, 0.96)
+        );
+
+    box-shadow:
+        0 25px 65px rgba(0,0,0,0.25);
+}
+
+.config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.config-header h2 {
+    margin-top: 7px;
+
+    font-size: 22px;
+}
+
+.config-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #7189a4;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.config-status span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #7189a4;
+}
+
+/* =========================================
+   CONFIG PANELS
+========================================= */
+
+.config-panel {
+    padding: 25px 0 5px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 17px;
+}
+
+.field label {
+    color: #b9c9da;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    height: 47px;
+
+    padding: 0 14px;
+
+    outline: none;
+
+    color: #e9f2fb;
+
+    background: #071827;
+
+    border: 1px solid rgba(130, 170, 210, 0.17);
+
+    border-radius: 10px;
+}
+
+.field input::placeholder {
+    color: #536b85;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: #35d1cd;
+
+    box-shadow:
+        0 0 0 3px rgba(53, 209, 205, 0.08);
+}
+
+.field input[type="file"] {
+    padding: 12px;
+
+    cursor: pointer;
+}
+
+.field-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.field-help {
+    margin-top: -3px;
+
+    color: #687f99;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* =========================================
+   CONNECTION INFO
+========================================= */
+
+.connection-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.info-item {
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.025);
+
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.info-item span {
+    display: block;
+
+    color: #5e7690;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.info-item strong {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #b8c9da;
+
+    font-size: 11px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.connection-message {
+    min-height: 24px;
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    color: #35d1cd;
+
+    font-size: 13px;
+}
+
+.connect-button {
+    width: 100%;
+    height: 53px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 22px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #20b9a9,
+            #59a9f5
+        );
+
+    color: #06111f;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.connect-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 25px rgba(50, 190, 210, 0.15);
+}
+
+.connect-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================
+   PIPELINE
+========================================= */
+
+.pipeline {
+    display: flex;
+    align-items: center;
+
+    margin-top: 30px;
+
+    padding: 17px 20px;
+
+    border: 1px solid rgba(255,255,255,0.07);
+
+    border-radius: 14px;
+
+    background: rgba(7, 22, 38, 0.72);
+}
+
+.pipeline-step {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #5f7690;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.pipeline-step span {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    font-size: 8px;
+}
+
+.pipeline-step.active {
+    color: #35d1cd;
+}
+
+.pipeline-step.active span {
+    border-color: #35d1cd;
+
+    background: rgba(53,209,205,0.1);
+}
+
+.pipeline-line {
+    flex: 1;
+
+    height: 1px;
+
+    margin: 0 10px;
+
+    background: rgba(255,255,255,0.09);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .connector-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .connection-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pipeline {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .security-status {
+        display: none;
+    }
+
+    .content {
+        width: calc(100% - 30px);
+
+        padding-top: 35px;
+    }
+
+    .heading h1 {
+        font-size: 30px;
+    }
+
+    .connector-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .configuration-card {
+        padding: 22px;
+    }
+
+    .field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pipeline {
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,5 @@
+DEVICE_NO,MACHINE_DESC,SITE_LOC,CONDITION,MODIFIED
+A201,Temperature Sensor,Room 4,Online,2026-09-07 11:20
+A202,Control Module,Gallery 2,Maintenance,2026-09-07 11:25
+A203,Power Unit,Zone 3,Active,2026-09-07 11:30
+A204,Pressure Sensor,Lab 1,Offline,2026-09-07 11:35

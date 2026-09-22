@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Project Octopus | Search</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Inter,
+                Arial,
+                sans-serif;
+
+            color: #eef7ff;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #12385d 0%,
+                    #081827 40%,
+                    #04101b 100%
+                );
+        }
+
+        .page {
+
+            width: min(
+                1400px,
+                94%
+            );
+
+            margin: auto;
+
+            padding:
+                32px 0 60px;
+        }
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+
+            font-size: 32px;
+
+            font-weight: 800;
+        }
+
+        .brand p {
+
+            margin-top: 6px;
+
+            color: #88a9be;
+
+            font-size: 13px;
+        }
+
+        .header-buttons {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-weight: 700;
+
+            padding:
+                11px 17px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+        }
+
+        button:hover {
+
+            opacity: 0.9;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17c6b6,
+                    #4387ff
+                );
+        }
+
+        /* ==================================================
+           SEARCH PANEL
+        ================================================== */
+
+        .search-panel {
+
+            padding: 20px;
+
+            margin-bottom: 22px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(
+                    8,
+                    27,
+                    43,
+                    0.92
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.07
+                );
+        }
+
+        .search-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                180px
+                180px
+                auto;
+
+            gap: 10px;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding:
+                13px 14px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid
+                rgba(
+                    150,
+                    210,
+                    240,
+                    0.15
+                );
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.045
+                );
+
+            color: #edf8ff;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        input::placeholder {
+
+            color: #6d8b9e;
+        }
+
+        select option {
+
+            background: #092034;
+
+            color: white;
+        }
+
+        .search-info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 12px;
+
+            color: #7898ad;
+
+            font-size: 12px;
+        }
+
+        /* ==================================================
+           SUMMARY
+        ================================================== */
+
+        .summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .summary-card {
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        16,
+                        48,
+                        72,
+                        0.95
+                    ),
+                    rgba(
+                        7,
+                        23,
+                        38,
+                        0.95
+                    )
+                );
+
+            border:
+                1px solid
+                rgba(
+                    110,
+                    207,
+                    255,
+                    0.10
+                );
+        }
+
+        .summary-label {
+
+            color: #779db4;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+        }
+
+        .summary-value {
+
+            margin-top: 8px;
+
+            font-size: 25px;
+
+            font-weight: 800;
+        }
+
+        /* ==================================================
+           RESULTS
+        ================================================== */
+
+        .results-card {
+
+            padding: 22px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(
+                    8,
+                    27,
+                    43,
+                    0.92
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.07
+                );
+        }
+
+        .results-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .results-header h2 {
+
+            font-size: 18px;
+        }
+
+        .results-header p {
+
+            margin-top: 5px;
+
+            color: #7898ad;
+
+            font-size: 12px;
+        }
+
+        .results-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 15px;
+        }
+
+        .entity-card {
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.035
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+        }
+
+        .entity-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 16px;
+        }
+
+        .entity-name {
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+        .entity-id {
+
+            margin-top: 5px;
+
+            color: #6f95aa;
+
+            font-size: 10px;
+
+            word-break: break-all;
+        }
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding:
+                6px 10px;
+
+            border-radius: 20px;
+
+            color: #5de2ae;
+
+            background:
+                rgba(
+                    69,
+                    224,
+                    167,
+                    0.09
+                );
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 10px;
+
+            margin-bottom: 15px;
+        }
+
+        .info {
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.025
+                );
+        }
+
+        .label {
+
+            color: #6e8ea2;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+        .value {
+
+            margin-top: 5px;
+
+            color: #d8e8f1;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+        .card-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+        .card-actions button {
+
+            padding:
+                9px 13px;
+
+            font-size: 11px;
+        }
+
+        .empty {
+
+            padding: 35px 10px;
+
+            text-align: center;
+
+            color: #7695a9;
+
+            font-size: 13px;
+        }
+
+        .error {
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            color: #ffaaaa;
+
+            background:
+                rgba(
+                    255,
+                    80,
+                    80,
+                    0.08
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    100,
+                    100,
+                    0.15
+                );
+        }
+
+        .footer {
+
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #5f7d91;
+
+            font-size: 11px;
+        }
+
+        @media (max-width: 1000px) {
+
+            .search-row {
+
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .results-grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .summary {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .search-row {
+
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+    <!-- ==================================================
+         HEADER
+    ================================================== -->
+
+    <div class="header">
+
+        <div class="brand">
+
+            <h1>
+                Octopus Search
+            </h1>
+
+            <p>
+                Search the centralized PostgreSQL entity
+                store using live synchronized data
+            </p>
+
+        </div>
+
+        <div class="header-buttons">
+
+            <button
+                onclick="goToSync()"
+            >
+                Synchronization
+            </button>
+
+            <button
+                class="primary"
+                onclick="loadEntities()"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         SEARCH PANEL
+    ================================================== -->
+
+    <div class="search-panel">
+
+        <div class="search-row">
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search entity, ID, location, status, source..."
+            >
+
+            <select
+                id="statusFilter"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Inactive">
+                    Inactive
+                </option>
+
+                <option value="Maintenance">
+                    Maintenance
+                </option>
+
+                <option value="Fault">
+                    Fault
+                </option>
+
+            </select>
+
+
+            <input
+                id="locationFilter"
+                type="text"
+                placeholder="Location"
+            >
+
+
+            <button
+                class="primary"
+                onclick="applyFilters()"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <div class="search-info">
+
+            <span id="searchStatus">
+                Loading centralized data...
+            </span>
+
+            <span>
+                Auto-refresh: 10 seconds
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         SUMMARY
+    ================================================== -->
+
+    <div class="summary">
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Matching Results
+            </div>
+
+            <div
+                id="resultCount"
+                class="summary-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Active
+            </div>
+
+            <div
+                id="activeCount"
+                class="summary-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Latest Update
+            </div>
+
+            <div
+                id="latestUpdate"
+                class="summary-value"
+                style="font-size:16px;"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         RESULTS
+    ================================================== -->
+
+    <div class="results-card">
+
+        <div class="results-header">
+
+            <div>
+
+                <h2>
+                    Centralized Entities
+                </h2>
+
+                <p>
+                    Live records returned from PostgreSQL
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="results"
+            class="results-grid"
+        >
+
+            <div class="empty">
+                Loading entities...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        Project Octopus · Centralized heterogeneous
+        data search
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // ====================================================
+    // STATE
+    // ====================================================
+
+    let allEntities = [];
+
+
+    // ====================================================
+    // FORMAT DATE
+    // ====================================================
+
+    function formatDate(
+        value
+    ) {
+
+        if (!value) {
+
+            return "Not available";
+        }
+
+        try {
+
+            return new Date(
+                value
+            ).toLocaleString(
+                "en-IN",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            );
+
+        } catch {
+
+            return String(
+                value
+            );
+        }
+    }
+
+
+    // ====================================================
+    // ESCAPE HTML
+    // ====================================================
+
+    function escapeHtml(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+        }
+
+        return String(
+            value
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+    }
+
+
+    // ====================================================
+    // LOAD ENTITIES FROM POSTGRESQL
+    // ====================================================
+
+    async function loadEntities() {
+
+        const status =
+            document.getElementById(
+                "searchStatus"
+            );
+
+        try {
+
+            status.textContent =
+                "Loading centralized records...";
+
+            const response =
+                await fetch(
+                    "/api/entities",
+                    {
+                        cache: "no-store"
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    || "Unable to load entities."
+                );
+            }
+
+            allEntities =
+                Array.isArray(
+                    data.entities
+                )
+                    ? data.entities
+                    : [];
+
+            applyFilters();
+
+            status.textContent =
+                `Connected to PostgreSQL · `
+                + `${allEntities.length} records loaded`;
+
+        } catch (error) {
+
+            document.getElementById(
+                "results"
+            ).innerHTML = `
+                <div class="error">
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </div>
+            `;
+
+            status.textContent =
+                "Database search unavailable";
+        }
+    }
+
+
+    // ====================================================
+    // APPLY SEARCH FILTERS
+    // ====================================================
+
+    function applyFilters() {
+
+        const query =
+            document.getElementById(
+                "searchInput"
+            ).value
+            .trim()
+            .toLowerCase();
+
+        const status =
+            document.getElementById(
+                "statusFilter"
+            ).value
+            .trim()
+            .toLowerCase();
+
+        const location =
+            document.getElementById(
+                "locationFilter"
+            ).value
+            .trim()
+            .toLowerCase();
+
+
+        const filtered =
+            allEntities.filter(
+                function(entity) {
+
+                    const searchable = [
+                        entity.entity_id,
+                        entity.entity_name,
+                        entity.entity_type,
+                        entity.source_id,
+                        entity.location,
+                        entity.status,
+                        JSON.stringify(
+                            entity.attributes
+                            || {}
+                        )
+                    ]
+                        .join(" ")
+                        .toLowerCase();
+
+
+                    const matchesQuery =
+                        !query
+                        ||
+                        searchable.includes(
+                            query
+                        );
+
+
+                    const matchesStatus =
+                        !status
+                        ||
+                        String(
+                            entity.status
+                            || ""
+                        )
+                            .toLowerCase()
+                            === status;
+
+
+                    const matchesLocation =
+                        !location
+                        ||
+                        String(
+                            entity.location
+                            || ""
+                        )
+                            .toLowerCase()
+                            .includes(
+                                location
+                            );
+
+
+                    return (
+                        matchesQuery
+                        &&
+                        matchesStatus
+                        &&
+                        matchesLocation
+                    );
+                }
+            );
+
+
+        renderResults(
+            filtered
+        );
+
+
+        updateSummary(
+            filtered
+        );
+    }
+
+
+    // ====================================================
+    // RENDER RESULTS
+    // ====================================================
+
+    function renderResults(
+        entities
+    ) {
+
+        const container =
+            document.getElementById(
+                "results"
+            );
+
+
+        if (!entities.length) {
+
+            container.innerHTML = `
+                <div class="empty">
+
+                    No centralized entities
+                    match the current search.
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            entities
+                .map(
+                    function(entity) {
+
+                        return `
+
+                            <div class="entity-card">
+
+                                <div class="entity-top">
+
+                                    <div>
+
+                                        <div class="entity-name">
+
+                                            ${escapeHtml(
+                                                entity.entity_name
+                                                || "Unnamed Entity"
+                                            )}
+
+                                        </div>
+
+                                        <div class="entity-id">
+
+                                            ${escapeHtml(
+                                                entity.entity_id
+                                            )}
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="status">
+
+                                        ●
+
+                                        ${escapeHtml(
+                                            entity.status
+                                            || "Unknown"
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-grid">
+
+
+                                    <div class="info">
+
+                                        <div class="label">
+                                            Type
+                                        </div>
+
+                                        <div class="value">
+                                            ${escapeHtml(
+                                                entity.entity_type
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        <div class="label">
+                                            Source
+                                        </div>
+
+                                        <div class="value">
+                                            ${escapeHtml(
+                                                entity.source_id
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        <div class="label">
+                                            Location
+                                        </div>
+
+                                        <div class="value">
+                                            ${escapeHtml(
+                                                entity.location
+                                                || "Not available"
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        <div class="label">
+                                            Updated
+                                        </div>
+
+                                        <div class="value">
+                                            ${escapeHtml(
+                                                formatDate(
+                                                    entity.updated_at
+                                                )
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="card-actions">
+
+
+                                    <button
+                                        class="primary"
+                                        onclick='viewEntity(
+                                            ${JSON.stringify(
+                                                entity.entity_id
+                                            )}
+                                        )'
+                                    >
+
+                                        View Details
+
+                                    </button>
+
+
+                                    <button
+                                        onclick='viewHistory(
+                                            ${JSON.stringify(
+                                                entity.entity_id
+                                            )}
+                                        )'
+                                    >
+
+                                        View History
+
+                                    </button>
+
+
+                                    <button
+                                        onclick='showLocation(
+                                            ${JSON.stringify(
+                                                entity.location
+                                            )}
+                                        )'
+                                    >
+
+                                        Location
+
+                                    </button>
+
+
+                                </div>
+
+                            </div>
+
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    // ====================================================
+    // SUMMARY
+    // ====================================================
+
+    function updateSummary(
+        entities
+    ) {
+
+        document.getElementById(
+            "resultCount"
+        ).textContent =
+            entities.length;
+
+
+        const active =
+            entities.filter(
+                function(entity) {
+
+                    return (
+                        String(
+                            entity.status
+                            || ""
+                        ).toLowerCase()
+                        === "active"
+                    );
+                }
+            ).length;
+
+
+        document.getElementById(
+            "activeCount"
+        ).textContent =
+            active;
+
+
+        let latest = null;
+
+        entities.forEach(
+            function(entity) {
+
+                if (
+                    entity.updated_at
+                    &&
+                    (
+                        !latest
+                        ||
+                        new Date(
+                            entity.updated_at
+                        )
+                        >
+                        new Date(
+                            latest
+                        )
+                    )
+                ) {
+
+                    latest =
+                        entity.updated_at;
+                }
+            }
+        );
+
+
+        document.getElementById(
+            "latestUpdate"
+        ).textContent =
+            latest
+                ? formatDate(latest)
+                : "—";
+    }
+
+
+    // ====================================================
+    // ENTITY DETAILS
+    // ====================================================
+
+    function viewEntity(
+        entityId
+    ) {
+
+        window.location.href =
+            "/static/entity.html?id="
+            +
+            encodeURIComponent(
+                entityId
+            );
+    }
+
+
+    // ====================================================
+    // HISTORY
+    // ====================================================
+
+    function viewHistory(
+        entityId
+    ) {
+
+        window.location.href =
+            "/static/entity.html?id="
+            +
+            encodeURIComponent(
+                entityId
+            );
+    }
+
+
+    // ====================================================
+    // LOCATION
+    //
+    // We intentionally show the actual stored source
+    // location. We are NOT pretending that a text value
+    // is a live map coordinate.
+    // ====================================================
+
+    function showLocation(
+        location
+    ) {
+
+        if (!location) {
+
+            alert(
+                "No location is currently stored for this entity."
+            );
+
+            return;
+        }
+
+        alert(
+            "Current stored location:\n\n"
+            + location
+            + "\n\n"
+            + "Map visualization will use verified "
+            + "location coordinates once available."
+        );
+    }
+
+
+    // ====================================================
+    // NAVIGATION
+    // ====================================================
+
+    function goToSync() {
+
+        window.location.href =
+            "/static/processing.html";
+    }
+
+
+    // ====================================================
+    // ENTER KEY SEARCH
+    // ====================================================
+
+    document.getElementById(
+        "searchInput"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                applyFilters();
+            }
+        }
+    );
+
+
+    document.getElementById(
+        "locationFilter"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                applyFilters();
+            }
+        }
+    );
+
+
+    // ====================================================
+    // INITIAL LOAD
+    // ====================================================
+
+    loadEntities();
+
+
+    // ====================================================
+    // AUTO REFRESH
+    // ====================================================
+
+    setInterval(
+        loadEntities,
+        10000
+    );
+
+</script>
+
+</body>
+
+</html>

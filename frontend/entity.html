@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Project Octopus | Entity Details</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Inter,
+                Arial,
+                sans-serif;
+
+            color: #eef7ff;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #12385d 0%,
+                    #081827 40%,
+                    #04101b 100%
+                );
+        }
+
+        .page {
+
+            width: min(
+                1200px,
+                94%
+            );
+
+            margin: auto;
+
+            padding:
+                32px 0 60px;
+        }
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+
+            font-size: 30px;
+
+            font-weight: 800;
+        }
+
+        .brand p {
+
+            margin-top: 6px;
+
+            color: #88a9be;
+
+            font-size: 13px;
+        }
+
+        .buttons {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-weight: 700;
+
+            padding:
+                11px 17px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+        }
+
+        button:hover {
+
+            opacity: 0.9;
+        }
+
+        .primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17c6b6,
+                    #4387ff
+                );
+        }
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.15fr
+                0.85fr;
+
+            gap: 20px;
+        }
+
+        .card {
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(
+                    8,
+                    27,
+                    43,
+                    0.92
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.07
+                );
+
+            box-shadow:
+                0 18px 55px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.20
+                );
+        }
+
+        .card h2 {
+
+            font-size: 18px;
+
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+
+            color: #7898ad;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .hero {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            align-items: flex-start;
+
+            margin-bottom: 25px;
+        }
+
+        .entity-name {
+
+            font-size: 28px;
+
+            font-weight: 800;
+        }
+
+        .entity-id {
+
+            margin-top: 6px;
+
+            color: #78a2ba;
+
+            font-size: 12px;
+        }
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px 13px;
+
+            border-radius: 20px;
+
+            color: #5de2ae;
+
+            background:
+                rgba(
+                    69,
+                    224,
+                    167,
+                    0.09
+                );
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+        }
+
+        .info {
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.03
+                );
+        }
+
+        .label {
+
+            color: #6f91a5;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+        .value {
+
+            margin-top: 6px;
+
+            color: #dbeaf3;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+        .history {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+        }
+
+        .event {
+
+            position: relative;
+
+            padding-left: 30px;
+        }
+
+        .event::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 6px;
+
+            top: 5px;
+
+            bottom: -20px;
+
+            width: 1px;
+
+            background:
+                rgba(
+                    121,
+                    172,
+                    204,
+                    0.20
+                );
+        }
+
+        .event:last-child::before {
+
+            display: none;
+        }
+
+        .event-dot {
+
+            position: absolute;
+
+            left: 0;
+
+            top: 3px;
+
+            width: 13px;
+
+            height: 13px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #18c9bd,
+                    #5d9cff
+                );
+
+            box-shadow:
+                0 0 12px
+                rgba(
+                    55,
+                    183,
+                    255,
+                    0.4
+                );
+        }
+
+        .event-title {
+
+            font-weight: 800;
+
+            font-size: 13px;
+        }
+
+        .event-time {
+
+            margin-top: 4px;
+
+            color: #7695a9;
+
+            font-size: 11px;
+        }
+
+        .event-location {
+
+            margin-top: 5px;
+
+            color: #aac5d5;
+
+            font-size: 12px;
+        }
+
+        .raw-data {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.20
+                );
+
+            overflow: auto;
+
+            max-height: 260px;
+
+            color: #bcd5e2;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+        .loading {
+
+            color: #7695a9;
+
+            padding: 20px 0;
+        }
+
+        .error {
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            color: #ffaaaa;
+
+            background:
+                rgba(
+                    255,
+                    80,
+                    80,
+                    0.08
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    100,
+                    100,
+                    0.15
+                );
+        }
+
+        @media (max-width: 850px) {
+
+            .grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .hero {
+
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .page {
+
+                width: 92%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+    <!-- ==================================================
+         TOP BAR
+    ================================================== -->
+
+    <div class="topbar">
+
+        <div class="brand">
+
+            <h1>
+                Octopus Entity Details
+            </h1>
+
+            <p>
+                Current centralized record and complete
+                event history
+            </p>
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                onclick="goBack()"
+            >
+                Back to Search
+            </button>
+
+            <button
+                class="primary"
+                onclick="loadEntity()"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         ENTITY + HISTORY
+    ================================================== -->
+
+    <div class="grid">
+
+        <!-- ENTITY -->
+
+        <div class="card">
+
+            <h2>
+                Current Entity
+            </h2>
+
+            <div class="subtitle">
+                Live record from central PostgreSQL
+            </div>
+
+            <div
+                id="entityContainer"
+            >
+
+                <div class="loading">
+                    Loading entity...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div class="card">
+
+            <h2>
+                Event History
+            </h2>
+
+            <div class="subtitle">
+                Recorded events associated with this entity
+            </div>
+
+            <div
+                id="historyContainer"
+                class="history"
+            >
+
+                <div class="loading">
+                    Loading history...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // ====================================================
+    // GET ENTITY ID
+    // ====================================================
+
+    function getEntityId() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return params.get(
+            "id"
+        );
+    }
+
+
+    // ====================================================
+    // FORMAT DATE
+    // ====================================================
+
+    function formatDate(
+        value
+    ) {
+
+        if (!value) {
+
+            return "Not available";
+        }
+
+        try {
+
+            return new Date(
+                value
+            ).toLocaleString(
+                "en-IN",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "medium"
+                }
+            );
+
+        } catch {
+
+            return String(
+                value
+            );
+        }
+    }
+
+
+    // ====================================================
+    // ESCAPE HTML
+    // ====================================================
+
+    function escapeHtml(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+        }
+
+        return String(
+            value
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+    }
+
+
+    // ====================================================
+    // LOAD ENTITY
+    // ====================================================
+
+    async function loadEntity() {
+
+        const entityId =
+            getEntityId();
+
+        if (!entityId) {
+
+            document.getElementById(
+                "entityContainer"
+            ).innerHTML = `
+                <div class="error">
+                    No entity ID was supplied.
+                </div>
+            `;
+
+            return;
+        }
+
+        try {
+
+            const [
+                entityResponse,
+                eventsResponse
+            ] = await Promise.all([
+
+                fetch(
+                    "/api/entities/"
+                    + encodeURIComponent(
+                        entityId
+                    ),
+                    {
+                        cache: "no-store"
+                    }
+                ),
+
+                fetch(
+                    "/api/entities/"
+                    + encodeURIComponent(
+                        entityId
+                    )
+                    + "/events",
+                    {
+                        cache: "no-store"
+                    }
+                )
+            ]);
+
+
+            const entityData =
+                await entityResponse.json();
+
+            const eventsData =
+                await eventsResponse.json();
+
+
+            if (
+                !entityResponse.ok ||
+                !entityData.success
+            ) {
+
+                throw new Error(
+                    entityData.error
+                    || entityData.detail
+                    || "Entity could not be loaded."
+                );
+            }
+
+
+            renderEntity(
+                entityData.entity
+            );
+
+
+            renderEvents(
+                eventsData
+            );
+
+
+        } catch (error) {
+
+            document.getElementById(
+                "entityContainer"
+            ).innerHTML = `
+                <div class="error">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </div>
+            `;
+
+            document.getElementById(
+                "historyContainer"
+            ).innerHTML = `
+                <div class="error">
+                    Unable to load event history.
+                </div>
+            `;
+        }
+    }
+
+
+    // ====================================================
+    // RENDER ENTITY
+    // ====================================================
+
+    function renderEntity(
+        entity
+    ) {
+
+        const attributes =
+            entity.attributes
+            || {};
+
+        document.getElementById(
+            "entityContainer"
+        ).innerHTML = `
+
+            <div class="hero">
+
+                <div>
+
+                    <div class="entity-name">
+                        ${escapeHtml(
+                            entity.entity_name
+                        )}
+                    </div>
+
+                    <div class="entity-id">
+                        ${escapeHtml(
+                            entity.entity_id
+                        )}
+                    </div>
+
+                </div>
+
+                <div class="status">
+
+                    ●
+
+                    ${escapeHtml(
+                        entity.status
+                        || "Unknown"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info">
+
+                    <div class="label">
+                        Entity Type
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            entity.entity_type
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="label">
+                        Source
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            entity.source_id
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="label">
+                        Current Location
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            entity.location
+                            || "Not available"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="label">
+                        Last Updated
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            formatDate(
+                                entity.updated_at
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="label">
+                        Created
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            formatDate(
+                                entity.created_at
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="label">
+                        Source Record ID
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            attributes.source_record_id
+                            || "Not available"
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h3
+                style="
+                    margin-top:24px;
+                    margin-bottom:10px;
+                    font-size:14px;
+                "
+            >
+                Source Data
+            </h3>
+
+
+            <div class="raw-data">
+
+                <pre>${escapeHtml(
+                    JSON.stringify(
+                        attributes,
+                        null,
+                        2
+                    )
+                )}</pre>
+
+            </div>
+
+        `;
+    }
+
+
+    // ====================================================
+    // RENDER EVENTS
+    // ====================================================
+
+    function renderEvents(
+        data
+    ) {
+
+        const container =
+            document.getElementById(
+                "historyContainer"
+            );
+
+        if (
+            !data ||
+            !data.success
+        ) {
+
+            container.innerHTML = `
+                <div class="loading">
+                    No event history available.
+                </div>
+            `;
+
+            return;
+        }
+
+        const events =
+            data.events
+            || [];
+
+        if (!events.length) {
+
+            container.innerHTML = `
+                <div class="loading">
+                    No recorded events for this entity yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            events
+                .map(
+                    function(event) {
+
+                        const metadata =
+                            event.event_metadata
+                            || {};
+
+                        return `
+
+                            <div class="event">
+
+                                <div class="event-dot"></div>
+
+                                <div class="event-title">
+
+                                    ${escapeHtml(
+                                        event.event_type
+                                    )}
+
+                                </div>
+
+                                <div class="event-time">
+
+                                    ${escapeHtml(
+                                        formatDate(
+                                            event.occurred_at
+                                        )
+                                    )}
+
+                                </div>
+
+                                <div class="event-location">
+
+                                    Location:
+                                    ${escapeHtml(
+                                        event.location
+                                        || "Not available"
+                                    )}
+
+                                </div>
+
+                                <div
+                                    class="event-time"
+                                >
+
+                                    Actor:
+                                    ${escapeHtml(
+                                        event.actor_id
+                                        || "System"
+                                    )}
+
+                                </div>
+
+                                <div class="event-time">
+
+                                    ${escapeHtml(
+                                        JSON.stringify(
+                                            metadata
+                                        )
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    // ====================================================
+    // BACK TO SEARCH
+    // ====================================================
+
+    function goBack() {
+
+        window.location.href =
+            "/static/search.html";
+    }
+
+
+    // ====================================================
+    // INITIAL LOAD
+    // ====================================================
+
+    loadEntity();
+
+
+    // ====================================================
+    // AUTO REFRESH
+    // ====================================================
+
+    setInterval(
+        loadEntity,
+        10000
+    );
+
+</script>
+
+</body>
+
+</html>
